@@ -37,10 +37,10 @@ const patientSchema = new Schema(
             required : [true, "Password is required"]
         },
 
-        confirmPassword : {
-            type : "string",
-            required : [true, "password did not match"]
-        },
+        // confirmPassword : {
+        //     type : "string",
+        //     required : [true, "password did not match"]
+        // },
 
         refreshToken : {
             type : "string",
@@ -76,3 +76,18 @@ patientSchema.methods.generateAccessToken = function() {
         }
     )
 }
+
+patientSchema.methods.generateRefreshToken = function() {
+    return jwt.sign(
+        {
+            _id: this.id,
+        },
+        process.env.REFRESH_TOKEN_SECRET,
+        {
+            expiresIn: process.env.REFRESH_TOKEN_EXPIRY
+        }
+    )
+}
+
+
+export const Patient = mongoose.model("Patient", patientSchema)
