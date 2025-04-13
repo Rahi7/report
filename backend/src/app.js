@@ -26,4 +26,7 @@ import patientRouter from './routes/patient.routes.js'
 app.use("/api/v1/patients",patientRouter)
 // http://localhost:8000/api/v1/patients/register
 
+import errorMiddleware from './middlewares/error.middlewares.js';
+app.use(errorMiddleware);// this is used mainly to send the responses fron backend to frontend
+
 export {app}

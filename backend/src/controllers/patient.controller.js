@@ -24,18 +24,18 @@ const generateAccessAndRefreshToken = async(userId) => {
 
 const registerPatient = asyncHandler(async (req, res) => {
     //extracting patient details from the request body
-    const { name, email, dateOfBirth, aadharNumber, password,confirmPassword } = req.body;
+    const { fullName, email, dateOfBirth, aadharNumber, password,confirmPassword } = req.body;
 
     console.log(req.body);
 
-    if([name, email, dateOfBirth, aadharNumber, password, confirmPassword].some(field => field?.trim() === "")){
+    if([fullName, email, dateOfBirth, aadharNumber, password, confirmPassword].some(field => field?.trim() === "")){
         throw new ApiError(400, "All fields are required");
     }
 
     const existedPatient = await Patient.findOne({aadharNumber})
 
     if(existedPatient){
-        throw new ApiError(409, "Email or username is already in use");
+        throw new ApiError(409, "aadhar Number  is already in use");
     }
 
     if(password !== confirmPassword) {
@@ -43,14 +43,14 @@ const registerPatient = asyncHandler(async (req, res) => {
     }
 
     try{
-        console.log("Before creating user:", name);
+        console.log("Before creating user:", fullName);
 
         const [day, month, year] = dateOfBirth.split('/');
         const formattedDateOfBirth = new Date(`${year}-${month}-${day}`);
 
 
         const patient = await Patient.create({
-            name,
+            name: fullName,
             email,
             dateOfBirth: formattedDateOfBirth,
             aadharNumber,
