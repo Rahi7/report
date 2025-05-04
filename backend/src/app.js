@@ -16,14 +16,16 @@ app.use(cors({
 }))
 
 app.use(express.json({limit:"16kb"}))
-app.use(express.urlencoded({extended:true, limit:"16kb"}))
+app.use(express.urlencoded({extended:true, limit:"10mb"}))
 app.use(express.static("public"))
 app.use(cookieParser())
 
 // routes import
 import patientRouter from './routes/patient.routes.js'
+import doctorRouter from './routes/doctor.routes.js'
 
 app.use("/api/v1/patients",patientRouter)
+app.use("/api/v1/doctors",doctorRouter)
 // http://localhost:8000/api/v1/patients/register
 
 import errorMiddleware from './middlewares/error.middlewares.js';
