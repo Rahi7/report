@@ -6,10 +6,13 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import DoctorRegister from './pages/DoctorRegister'
 import PatientRegister from './pages/PatientRegister'
+import ContactUs from './pages/Contact_us'
 import About from './pages/About'
 import Services from './pages/Services'
 import Blog from './pages/Blog'
 import ForgotPassword from './pages/ForgotPassword'
+import Notifications from './pages/Notification'
+import History from './pages/History'
 
 function App() {
   return (
@@ -23,8 +26,11 @@ function App() {
         <Route path="patient-register" element={<PatientRegister />} />
         <Route path="about" element={<About />} />
         <Route path="services" element={<Services />} />
+        <Route path="contact" element={<ContactUs/>}/>
         <Route path="blog" element={<Blog />} />
         <Route path="forgot-password" element={<ForgotPassword />} />
+        <Route path="notifications" element={<Notifications />} />
+        <Route path="history" element={<History />} />
 
         {/* Protected routes */}
         <Route element={<ProtectedRoute />}>
