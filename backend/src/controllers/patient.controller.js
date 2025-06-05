@@ -75,4 +75,73 @@ const registerPatient = asyncHandler(async (req, res) => {
     }
 })
 
-export { registerPatient};
+const loginPatient = asyncHandler(async(req,res) => {
+        const {email,password} = req.body;
+     
+
+        if([email, password].some(field => field?.trim() === "")){
+            throw new ApiError(400, "All fields are required");
+        }
+
+
+        const existedPatient = await Patient.findOne({email})
+
+        console.log(existedPatient);
+
+        if(!existedPatient){
+            throw new ApiError(405,"Email is not registered");
+        }
+
+        const isMatch = await existedPatient.isPasswordCorrect(password);
+
+
+        if(!isMatch)
+            {
+                throw new ApiError(406,"Passwords do not match");
+            }
+
+        const {accessToken, refreshToken} = await generateAccessAndRefreshToken(existedPatient._id)
+
+        const loggedInPatient = await Patient.findById(existedPatient._id).select("-password -refreshToken");
+
+        const options ={
+            httpOnly: true,
+            secure: false
+        }
+        
+        return res
+        .status(201)
+        .cookie("accessToken", accessToken,options)
+        .cookie("refreshToken", refreshToken, options)
+        .json(
+            new ApiResponse(202,{existedUser: loggedInPatient, accessToken, refreshToken},"User logged in successfully")
+        )
+}) 
+
+const logoutPatient = asyncHandler(async(req,res) => {
+    await Patient.findByIdAndUpdate(
+        req.user._id,{
+            $set: {
+                refreshToken: undefined
+            }
+        },
+        {
+            new : true,
+        }
+    )
+
+    const options ={
+        httpOnly: true,
+        secure: true
+    }
+    
+    return res
+    .status(200)
+    .clearCookie("accesstoken",options)
+    .clearCookie("refreshtoken",options)
+    .json(
+        new ApiResponse(202,{},"User logged out successfully")
+    )
+})
+
+export { registerPatient, loginPatient, logoutPatient};

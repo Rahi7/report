@@ -62,19 +62,87 @@ const registerDoctor = asyncHandler(async (req, res) => {
         const createdDoctor = await Doctor.findById(doctor._id).select("-password -refreshToken -confirmPassword");
 
         if(!createdDoctor) {
-            throw new ApiError(500, "Something went wrong while registering the patient");
+            throw new ApiError(500, "Something went wrong while registering the doctor");
         }
 
         const doctorPlainObject = createdDoctor.toObject();
 
         return res.status(201).json(
-            new ApiResponse(200, doctorPlainObject, "Patient registered successfully")
+            new ApiResponse(200, doctorPlainObject, "doctor registered successfully")
         );
     }
     catch(error){
-        console.error('Error creating patient document ',error);
-        throw new ApiError(500, 'Error creating patient document');
+        console.error('Error creating doctor document ',error);
+        throw new ApiError(500, 'Error creating doctor document');
     }
 })
 
-export { registerDoctor};
+const loginDoctor = asyncHandler(async(req,res) => {
+        const {email,password} = req.body;
+        console.log(email)
+
+        if([email, password].some(field => field?.trim() === "")){
+            throw new ApiError(400, "All fields are required");
+        }
+
+
+        const existedDoctor = await Doctor.findOne({email})
+
+        console.log(existedDoctor);
+
+        if(!existedDoctor){
+            throw new ApiError(405,"Email is not registered");
+        }
+
+        const isMatch = await existedDoctor.isPasswordCorrect(password);
+
+
+        if(!isMatch)
+            {
+                throw new ApiError(406,"Passwords do not match");
+            }
+
+        const {accessToken, refreshToken} = await generateAccessAndRefreshToken(existedDoctor._id)
+
+        const loggedInDoctor = await Doctor.findById(existedDoctor._id).select("-password -refreshToken");
+
+        const options ={
+            httpOnly: true,
+            secure: true
+        }
+        
+        return res
+        .status(201)
+        .cookie("accessToken", accessToken,options)
+        .cookie("refreshToken", refreshToken, options)
+        .json(
+            new ApiResponse(202,{existedUser: loggedInDoctor, accessToken, refreshToken},"User logged in successfully")
+        )
+}) 
+const logoutDocotor = asyncHandler(async(req,res) => {
+    await Doctor.findByIdAndUpdate(
+        req.user._id,{
+            $set: {
+                refreshToken: undefined
+            }
+        },
+        {
+            new : true,
+        }
+    )
+
+    const options ={
+        httpOnly: true,
+        secure: true
+    }
+    
+    return res
+    .status(200)
+    .clearCookie("accessToken",options)
+    .clearCookie("refreshToken",options)
+    .json(
+        new ApiResponse(202,{},"User logged out successfully")
+    )
+})
+
+export { registerDoctor, loginDoctor,logoutDocotor};

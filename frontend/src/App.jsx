@@ -13,6 +13,8 @@ import Blog from './pages/Blog'
 import ForgotPassword from './pages/ForgotPassword'
 import Notifications from './pages/Notification'
 import History from './pages/History'
+import PatientDashboard from './pages/PatientDashboard'
+import DoctorDashboard from './pages/DoctorDashboard'
 
 function App() {
   return (
@@ -31,6 +33,8 @@ function App() {
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="notifications" element={<Notifications />} />
         <Route path="history" element={<History />} />
+        <Route path="patientdashboard" element={<PatientDashboard />} />
+        <Route path="doctordashboard" element={<DoctorDashboard />} />
 
         {/* Protected routes */}
         <Route element={<ProtectedRoute />}>

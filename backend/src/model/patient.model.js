@@ -70,7 +70,7 @@ patientSchema.methods.generateAccessToken = function() {
             name: this.name,
             aadharNumber: this.aadharNumber
         },
-        process.nextTick.ACCESS_TOKEN_SCERET,
+        process.env.ACCESS_TOKEN_SECRET,
         {
             expiresIn: process.env.ACCESS_TOKEN_EXPIRY
         }

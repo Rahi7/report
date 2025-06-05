@@ -70,7 +70,7 @@ doctorSchema.methods.generateAccessToken = function() {
             name: this.name,
             licenseNumber: this.licenseNumber
         },
-        process.nextTick.ACCESS_TOKEN_SCERET,
+        process.env.ACCESS_TOKEN_SECRET,
         {
             expiresIn: process.env.ACCESS_TOKEN_EXPIRY
         }
