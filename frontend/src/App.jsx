@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
 import ProtectedRoute from './components/ProtectedRoute'
-import PublicRoute from './components/PublicRoute'  // import here
+import PublicRoute from './components/PublicRoute'
 
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -17,12 +17,13 @@ import Notifications from './pages/Notification'
 import History from './pages/History'
 import PatientDashboard from './pages/PatientDashboard'
 import DoctorDashboard from './pages/DoctorDashboard'
+import ServiceDetails from './pages/ServiceDetails' // ✅ Import service detail page
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        {/* Public routes wrapped in PublicRoute */}
+        {/* Public routes */}
         <Route index element={<Home />} />
         <Route
           path="login"
@@ -56,7 +57,6 @@ function App() {
             </PublicRoute>
           }
         />
-        
         <Route path="about" element={<About />} />
         <Route
           path="services"
@@ -66,6 +66,16 @@ function App() {
             </ProtectedRoute>
           }
         />
+        {/* ✅ Dynamic service detail route */}
+        <Route
+          path="services/:slug"
+          element={
+            <ProtectedRoute>
+              <ServiceDetails />
+            </ProtectedRoute>
+          }
+        />
+
         <Route path="contact" element={<ContactUs />} />
         <Route path="blog" element={<Blog />} />
         <Route path="forgot-password" element={<ForgotPassword />} />
@@ -74,9 +84,9 @@ function App() {
         <Route path="patientdashboard" element={<PatientDashboard />} />
         <Route path="doctordashboard" element={<DoctorDashboard />} />
 
-        {/* Protected routes */}
+        {/* Placeholder for other protected routes */}
         <Route element={<ProtectedRoute />}>
-          {/* Add other protected routes here */}
+          {/* Add future protected routes here if needed */}
         </Route>
       </Route>
     </Routes>
