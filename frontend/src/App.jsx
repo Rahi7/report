@@ -1,6 +1,8 @@
 import { Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
 import ProtectedRoute from './components/ProtectedRoute'
+import PublicRoute from './components/PublicRoute'  // import here
+
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
@@ -20,18 +22,51 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        {/* Public routes */}
+        {/* Public routes wrapped in PublicRoute */}
         <Route index element={<Home />} />
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
-        <Route path="doctor-register" element={<DoctorRegister />} />
-        <Route path="patient-register" element={<PatientRegister />} />
+        <Route
+          path="login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="register"
+          element={
+            <PublicRoute>
+              <Register />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="doctor-register"
+          element={
+            <PublicRoute>
+              <DoctorRegister />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="patient-register"
+          element={
+            <PublicRoute>
+              <PatientRegister />
+            </PublicRoute>
+          }
+        />
+        
         <Route path="about" element={<About />} />
-        <Route path="services" element=
-        {<ProtectedRoute>
-          <Services />
-        </ProtectedRoute>} />
-        <Route path="contact" element={<ContactUs/>}/>
+        <Route
+          path="services"
+          element={
+            <ProtectedRoute>
+              <Services />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="contact" element={<ContactUs />} />
         <Route path="blog" element={<Blog />} />
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="notifications" element={<Notifications />} />
@@ -41,7 +76,7 @@ function App() {
 
         {/* Protected routes */}
         <Route element={<ProtectedRoute />}>
-          {/* Add protected routes here */}
+          {/* Add other protected routes here */}
         </Route>
       </Route>
     </Routes>
