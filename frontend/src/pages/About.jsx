@@ -63,19 +63,19 @@ function About() {
               name: "Ankita Ghosh",
               role: "Backend Developer",
               desc: "Passionate about building robust and scalable server-side applications.",
-              photo: "/team/person1.webp",
+              photo: "/team/ankita.webp",
             },
             {
               name: "Anukrita Biswas",
               role: "Frontend Developer",
               desc: "Crafting intuitive and engaging user experiences.",
-              photo: "/team/person2.webp",
+              photo: "/team/anukrita.webp",
             },
             {
               name: "Dipanwita Biswas",
               role: "Backend Developer",
               desc: "Focused on secure blockchain integration and scalable backend systems.",
-              photo: "/team/person4.webp",
+              photo: "/team/dipanwita.webp",
             },
             {
               name: "Saurabh Kumar",
