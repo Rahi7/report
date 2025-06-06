@@ -69,6 +69,7 @@ import {
   FaComments,
   FaNotesMedical,
   FaBrain,
+  FaUserInjured,
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
@@ -131,6 +132,13 @@ const Services = () => {
       icon: <FaBrain size={40} />,
       link: "/ai-insights",
     },
+    {
+  title: "View Patient Details",
+  description: "Access comprehensive patient profiles including medical history, prescriptions, and upcoming appointments.",
+  icon: <FaUserInjured size={40} />,  
+  link: "/patient-details",
+}
+ 
   ];
 
   return (
