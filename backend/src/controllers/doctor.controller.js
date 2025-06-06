@@ -24,11 +24,11 @@ const generateAccessAndRefreshToken = async(userId) => {
 
 const registerDoctor = asyncHandler(async (req, res) => {
     //extracting patient details from the request body
-    const { fullName, email, Specialization, licenseNumber,phoneNumber, password,confirmPassword } = req.body;
+    const { fullName, email, Specialization, licenseNumber,phoneNumber, walletAddress, password,confirmPassword } = req.body;
 
     console.log(req.body);
 
-    if([fullName, email, Specialization, licenseNumber, phoneNumber, password, confirmPassword].some(field => field?.trim() === "")){
+    if([fullName, email, Specialization, licenseNumber, phoneNumber,walletAddress, password, confirmPassword].some(field => field?.trim() === "")){
         throw new ApiError(400, "All fields are required");
     }
 
@@ -36,6 +36,12 @@ const registerDoctor = asyncHandler(async (req, res) => {
 
     if(existedDoctor){
         throw new ApiError(409, "license Number  is already in use");
+    }
+
+    const existedWallet = await Doctor.findOne({walletAddress})
+    
+    if(existedWallet){
+        throw new ApiError(409, "walletAddress  is already in use");
     }
 
     if(password !== confirmPassword) {
@@ -56,6 +62,7 @@ const registerDoctor = asyncHandler(async (req, res) => {
             Specialization,
             licenseNumber,
             phoneNumber,
+            walletAddress,
             password
         });
 

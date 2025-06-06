@@ -93,7 +93,7 @@ contract Medlock {
         string memory _name,
         string memory _specialization,
         uint256 _hospitalId
-    ) public onlyOwner {
+    ) public {
         require(bytes(doctorLicenses[_wallet]).length == 0, "Doctor already registered");
         require(bytes(doctors[_licenseNumber].doctorId).length == 0, "License number already registered");
 
@@ -111,7 +111,7 @@ contract Medlock {
         string memory _name,
         string memory _dob,
         string memory _contactDetails
-    ) public onlyOwner {
+    ) public  {
         require(aadhaarToAddress[_aadhaar] == address(0), "Aadhaar already registered");
         require(bytes(patientAadhaars[_wallet]).length == 0, "Wallet already used");
 

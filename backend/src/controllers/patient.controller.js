@@ -24,11 +24,11 @@ const generateAccessAndRefreshToken = async(userId) => {
 
 const registerPatient = asyncHandler(async (req, res) => {
     //extracting patient details from the request body
-    const { fullName, email, dateOfBirth, aadharNumber, password,confirmPassword } = req.body;
+    const { fullName, email, dateOfBirth, aadharNumber, walletAddress, password, confirmPassword } = req.body;
 
     console.log(req.body);
 
-    if([fullName, email, dateOfBirth, aadharNumber, password, confirmPassword].some(field => field?.trim() === "")){
+    if([fullName, email, dateOfBirth, aadharNumber,walletAddress, password, confirmPassword].some(field => field?.trim() === "")){
         throw new ApiError(400, "All fields are required");
     }
 
@@ -38,9 +38,18 @@ const registerPatient = asyncHandler(async (req, res) => {
         throw new ApiError(409, "aadhar Number  is already in use");
     }
 
+
+    const existedWallet = await Patient.findOne({walletAddress})
+
+    if(existedWallet){
+        throw new ApiError(409, "walletAddress  is already in use");
+    }
+
     if(password !== confirmPassword) {
         throw new ApiError(408,"Password did not match");
     }
+
+    
 
     try{
         console.log("Before creating user:", fullName);
@@ -54,6 +63,7 @@ const registerPatient = asyncHandler(async (req, res) => {
             email,
             dateOfBirth: formattedDateOfBirth,
             aadharNumber,
+            walletAddress,
             password
         });
 

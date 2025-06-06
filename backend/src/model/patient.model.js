@@ -37,6 +37,12 @@ const patientSchema = new Schema(
             required : [true, "Password is required"]
         },
 
+        walletAddress : {
+            type : "string",
+            required : [true, "walletAddress is required"],
+            unique : true
+        },
+
         // confirmPassword : {
         //     type : "string",
         //     required : [true, "password did not match"]
