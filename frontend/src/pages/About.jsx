@@ -1,115 +1,97 @@
-import React from "react";
-
 function About() {
-  const team = [
-    {
-      name: "Ankita Ghosh",
-      role: "Backend Developer",
-      description:
-        "Passionate about building robust and scalable server-side applications.",
-    },
-    {
-      name: "Anukrita Biswas",
-      role: "Frontend Developer",
-      description: "Crafting intuitive and engaging user experiences.",
-    },
-    {
-      name: "Dipanwita Biswas",
-      role: "Backend Developer",
-      description:
-        "Passionate about building robust and scalable server-side applications.",
-    },
-    {
-      name: "Saurabh Kumar",
-      role: "Frontend Developer",
-      description: "Crafting intuitive and engaging user experiences.",
-    },
-    {
-      name: "Trisha Mukhopadhyay",
-      role: "Frontend Developer",
-      description: "Crafting intuitive and engaging user experiences.",
-    },
-  ];
-
   return (
-    <div className="max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 py-16 text-gray-800 font-sans">
-      {/* Header */}
-      <header className="text-center max-w-3xl mx-auto mb-20">
-        <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
-          About Us
-        </h1>
-        <p className="text-lg sm:text-xl text-gray-600 leading-relaxed">
-          Our healthcare management system simplifies healthcare for patients and providers
-          with security and efficiency at its core.
-        </p>
-      </header>
-
-      {/* Mission */}
-      <section className="mb-20">
-        <h2 className="text-3xl font-semibold text-blue-800 mb-4 border-b-2 border-blue-400 inline-block pb-1">
-          Our Mission
-        </h2>
-        <p className="text-gray-700 text-lg leading-relaxed">
-          To offer a secure, user-friendly platform that seamlessly connects patients with
-          healthcare professionals and streamlines medical workflows.
+    <div className="bg-white text-gray-800">
+      {/* Intro Section */}
+      <section className="max-w-7xl mx-auto px-6 py-16 text-center">
+        <h1 className="text-4xl font-extrabold text-blue-900">About Us</h1>
+        <p className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto">
+          Medlock is a healthcare management system designed to simplify and secure the medical experience for patients and healthcare providers alike.
         </p>
       </section>
 
-      {/* Features */}
-      <section className="mb-20">
-        <h2 className="text-3xl font-semibold text-blue-800 mb-6 border-b-2 border-blue-400 inline-block pb-1">
-          Features
-        </h2>
-        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700 text-base list-disc list-inside">
-          <li>Secure medical record storage</li>
-          <li>Easy appointment scheduling</li>
-          <li>Integrated communication tools</li>
-          <li>Smart prescription management</li>
-          <li>Comprehensive medical history view</li>
-        </ul>
+      {/* Mission Section */}
+      <section className="bg-blue-50 py-16 px-6">
+        <div className="max-w-5xl mx-auto text-center">
+          <h2 className="text-3xl font-bold text-blue-800">Our Mission</h2>
+          <p className="mt-4 text-gray-600 text-lg">
+            To provide a secure, efficient, and user-friendly platform that connects patients with healthcare providers, simplifies medical record handling, and improves the overall healthcare journey.
+          </p>
+        </div>
       </section>
 
-      {/* Security */}
-      <section className="mb-24">
-        <h2 className="text-3xl font-semibold text-blue-800 mb-4 border-b-2 border-blue-400 inline-block pb-1">
-          Security
-        </h2>
-        <p className="text-gray-700 text-lg leading-relaxed">
-          Your data privacy is paramount. We use enterprise-grade encryption and comply
-          with global health data protection standards to ensure peace of mind.
-        </p>
+      {/* Features Section */}
+      <section className="py-16 px-6">
+        <div className="max-w-5xl mx-auto text-center">
+          <h2 className="text-3xl font-bold text-blue-800">Features</h2>
+          <ul className="mt-8 grid gap-6 sm:grid-cols-2 text-gray-600 text-left max-w-3xl mx-auto">
+            <li className="bg-gray-100 p-4 rounded-lg shadow-sm">🔒 Secure medical record management</li>
+            <li className="bg-gray-100 p-4 rounded-lg shadow-sm">📅 Easy appointment scheduling</li>
+            <li className="bg-gray-100 p-4 rounded-lg shadow-sm">💬 Direct communication with providers</li>
+            <li className="bg-gray-100 p-4 rounded-lg shadow-sm">📝 Prescription management</li>
+            <li className="bg-gray-100 p-4 rounded-lg shadow-sm">📁 Medical history tracking</li>
+          </ul>
+        </div>
       </section>
 
-      {/* Our Team */}
-      <section className="bg-gradient-to-br from-blue-50 to-white py-20 px-8 rounded-3xl shadow-lg">
-        <h2 className="text-4xl sm:text-5xl font-bold text-center text-blue-900 mb-16">
-          Meet Our Team!
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12 max-w-6xl mx-auto">
-          {team.map(({ name, role, description }) => (
+      {/* Security Section */}
+      <section className="bg-blue-50 py-16 px-6">
+        <div className="max-w-5xl mx-auto text-center">
+          <h2 className="text-3xl font-bold text-blue-800">Security</h2>
+          <p className="mt-4 text-gray-600 text-lg">
+            We prioritize your privacy. Medlock uses end-to-end encryption and complies with all modern healthcare data protection standards to safeguard your medical data.
+          </p>
+        </div>
+      </section>
+
+      {/* Our Team Section */}
+      <section className="py-20 px-6 bg-white">
+        <h2 className="text-4xl font-semibold text-center text-blue-900 mb-12">Meet Our Team</h2>
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {[
+            {
+              name: "Ankita Ghosh",
+              role: "Backend Developer",
+              desc: "Passionate about building robust and scalable server-side applications.",
+            },
+            {
+              name: "Anukrita Biswas",
+              role: "Frontend Developer",
+              desc: "Crafting intuitive and engaging user experiences.",
+            },
+            {
+              name: "Dipanwita Biswas",
+              role: "Backend Developer",
+              desc: "Focused on secure blockchain integration and scalable backend systems.",
+            },
+            {
+              name: "Saurabh Kumar",
+              role: "Frontend Developer",
+              desc: "Committed to creating sleek, responsive interfaces.",
+            },
+            {
+              name: "Trisha Mukhopadhyay",
+              role: "Frontend Developer",
+              desc: "Bringing creativity and clarity to the user interface.",
+            },
+          ].map((member, index) => (
             <div
-              key={name}
-              className="relative bg-white w-full max-w-sm mx-auto rounded-3xl shadow-md p-8 text-center transform transition duration-300 ease-in-out hover:shadow-xl hover:-translate-y-2"
+              key={index}
+              className="bg-gray-50 p-6 rounded-2xl shadow-md hover:shadow-xl transition duration-300 text-center"
             >
-              <div className="absolute top-0 left-0 w-full h-1 rounded-t-3xl bg-gradient-to-r from-blue-400 to-blue-600" />
-
-              <div className="w-24 h-24 mb-6 mx-auto rounded-full bg-gradient-to-tr from-blue-500 to-blue-700 flex items-center justify-center text-white text-3xl font-bold shadow-lg">
-                {name
-                  .split(" ")
-                  .map((n) => n[0])
-                  .join("")}
+              <div className="w-24 h-24 bg-gray-300 rounded-full mx-auto mb-4 flex items-center justify-center text-gray-600 font-bold text-lg">
+                {/* Placeholder for image */}
+                Img
               </div>
-
-              <h3 className="text-xl font-semibold text-blue-800">{name}</h3>
-              <p className="text-blue-500 italic text-sm mb-3">{role}</p>
-              <p className="text-gray-600 text-sm">{description}</p>
+              <h3 className="text-xl font-bold text-blue-700">{member.name}</h3>
+              <p className="text-sm text-gray-700">{member.role}</p>
+              <p className="text-xs text-gray-500 mt-2">{member.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="mt-20 bg-blue-900 text-white text-center py-6 rounded-lg shadow-inner">
+      <footer className="bg-blue-900 text-white text-center py-6">
         <p>&copy; {new Date().getFullYear()} Medlock. All rights reserved.</p>
       </footer>
     </div>
