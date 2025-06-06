@@ -83,7 +83,7 @@ function About() {
       {/* Our Team */}
       <section className="bg-gradient-to-br from-blue-50 to-white py-20 px-8 rounded-3xl shadow-lg">
         <h2 className="text-4xl sm:text-5xl font-bold text-center text-blue-900 mb-16">
-          Meet Our Team
+          Meet Our Team!
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12 max-w-6xl mx-auto">
           {team.map(({ name, role, description }) => (
