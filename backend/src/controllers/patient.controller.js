@@ -2,6 +2,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { Patient } from "../model/patient.model.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
+import { registerPatientOnChain } from "../blockchain.js";
 
 const generateAccessAndRefreshToken = async(userId) => {
     try{
@@ -24,11 +25,11 @@ const generateAccessAndRefreshToken = async(userId) => {
 
 const registerPatient = asyncHandler(async (req, res) => {
     //extracting patient details from the request body
-    const { fullName, email, dateOfBirth, aadharNumber, walletAddress, password, confirmPassword } = req.body;
+    const { fullName, email, dateOfBirth, aadharNumber, address, phoneNumber,walletAddress, password, confirmPassword } = req.body;
 
     console.log(req.body);
 
-    if([fullName, email, dateOfBirth, aadharNumber,walletAddress, password, confirmPassword].some(field => field?.trim() === "")){
+    if([fullName, email, dateOfBirth, aadharNumber,address, phoneNumber,walletAddress, password, confirmPassword].some(field => field?.trim() === "")){
         throw new ApiError(400, "All fields are required");
     }
 
@@ -43,6 +44,11 @@ const registerPatient = asyncHandler(async (req, res) => {
 
     if(existedWallet){
         throw new ApiError(409, "walletAddress  is already in use");
+    }
+    const existedPhone = await Patient.findOne({phoneNumber})
+
+    if(existedPhone){
+        throw new ApiError(409, "Phone Number  is already in use");
     }
 
     if(password !== confirmPassword) {
@@ -63,6 +69,8 @@ const registerPatient = asyncHandler(async (req, res) => {
             email,
             dateOfBirth: formattedDateOfBirth,
             aadharNumber,
+            address,
+            phoneNumber,
             walletAddress,
             password
         });
@@ -73,6 +81,19 @@ const registerPatient = asyncHandler(async (req, res) => {
             throw new ApiError(500, "Something went wrong while registering the patient");
         }
 
+        try {
+      const txHash = await registerPatientOnChain(
+        walletAddress,
+        aadharNumber,
+        fullName,
+        formattedDateOfBirth.toISOString().split("T")[0],
+        email
+      );
+      console.log("✅ Blockchain txHash:", txHash);
+    } catch (blockchainError) {
+      console.error("❌ Blockchain error:", blockchainError);
+      // Optionally delete patient from DB here if you want full rollback
+    }
         const patientPlainObject = createdPatient.toObject();
 
         return res.status(201).json(

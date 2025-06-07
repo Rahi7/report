@@ -31,6 +31,16 @@ const patientSchema = new Schema(
             trim: true,
             index: true
         },
+        address : {
+
+            type: "string",
+            required : true
+        },
+        phoneNumber : {
+            type : "Number",
+            required : true,
+            unique : true
+        },
 
         password : {
             type : "string",

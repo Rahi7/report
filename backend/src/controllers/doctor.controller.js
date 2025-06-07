@@ -152,5 +152,16 @@ const logoutDocotor = asyncHandler(async(req,res) => {
     )
 })
 
+const getDoctorProfile = asyncHandler(async (req, res) => {
+  const doctorId = req.user._id;  // assuming req.user is set by your auth middleware
 
-export { registerDoctor, loginDoctor,logoutDocotor};
+  const doctor = await Doctor.findById(doctorId).select("-password -refreshToken");
+  if (!doctor) {
+    throw new ApiError(404, "Doctor profile not found");
+  }
+
+  return res.status(200).json(new ApiResponse(200, doctor, "Doctor fetched successfully"));
+});
+
+
+export { registerDoctor, loginDoctor,logoutDocotor, getDoctorProfile};

@@ -32,4 +32,13 @@ app.use("/api/v1/doctors",doctorRouter)
 import errorMiddleware from './middlewares/error.middlewares.js';
 app.use(errorMiddleware);// this is used mainly to send the responses fron backend to frontend
 
+import uploadRouter from './routes/upload.routes.js';
+
+app.use("/api/v1/upload", uploadRouter);
+
+
+import ipfsRoutes from './routes/ipfs.routes.js';
+
+app.use('/api/v1/ipfs', ipfsRoutes);
+
 export {app}

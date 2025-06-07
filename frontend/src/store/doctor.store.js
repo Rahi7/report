@@ -153,6 +153,27 @@ export const useDoctorStore = create(
         }
       },
 
+       fetchProfile: async () => {
+        set({ loading: true, error: null });
+        try {
+          const res = await fetch("/api/v1/doctors/profile", {
+            method: "GET",
+            credentials: "include", // send cookies
+          });
+          const data = await res.json();
+
+          if (!res.ok) {
+            throw new Error(data?.message || "Failed to fetch profile");
+          }
+
+          set({ user: data.data, loading: false });
+          return { success: true };
+        } catch (err) {
+          set({ error: err.message, loading: false, user: null });
+          return { success: false, message: err.message };
+        }
+      },
+
       logoutDoctor: async () => {
         try {
           await fetch("/api/v1/doctors/logout", {
