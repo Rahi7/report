@@ -152,4 +152,5 @@ const logoutDocotor = asyncHandler(async(req,res) => {
     )
 })
 
+
 export { registerDoctor, loginDoctor,logoutDocotor};

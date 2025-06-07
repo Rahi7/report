@@ -154,4 +154,16 @@ const logoutPatient = asyncHandler(async(req,res) => {
     )
 })
 
-export { registerPatient, loginPatient, logoutPatient};
+const getPatientProfile = asyncHandler(async (req, res) => {
+  const patientId = req.user._id;  // assuming req.user is set by your auth middleware
+
+  const patient = await Patient.findById(patientId).select("-password -refreshToken");
+  if (!patient) {
+    throw new ApiError(404, "Patient profile not found");
+  }
+
+  return res.status(200).json(new ApiResponse(200, patient, "Profile fetched successfully"));
+});
+
+
+export { registerPatient, loginPatient, logoutPatient, getPatientProfile};

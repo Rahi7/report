@@ -1,7 +1,7 @@
 import { ApiError } from "../utils/ApiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import jwt from "jsonwebtoken";
-import { User } from "../models/user.model.js";
+import { Patient } from "../model/patient.model.js";
 
 export const verifyJWT =asyncHandler(async(req,res,next) => {
     try {
@@ -19,7 +19,7 @@ export const verifyJWT =asyncHandler(async(req,res,next) => {
         // to retrieve the information, we need to decode the token for that we need to have the key(access) to the token. for that we are using jwt verify to decode the token using the token secret (stored in the env)
         const decodedToken = jwt.verify(token,process.env.ACCESS_TOKEN_SECRET)
     
-        const user = await User.findById(decodedToken?._id).select("-password -refreshToken")
+        const user = await Patient.findById(decodedToken?._id).select("-password -refreshToken")
     
         if(!user){
             throw new ApiError(401,"Invalid Access Token")
