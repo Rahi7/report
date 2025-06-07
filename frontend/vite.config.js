@@ -13,9 +13,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      // '/api': 'https://df0c-2401-4900-314c-a58b-8c35-3ffb-e58c-3010.ngrok-free.app', // Your backend URL
-      '/api':'http://localhost:8000',
-
+     '/api':'http://localhost:8000', // Your backend URL
     },
   },
 });
