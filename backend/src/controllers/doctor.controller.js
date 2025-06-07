@@ -2,6 +2,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { Doctor } from "../model/doctor.model.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
+import { registerDoctorOnChain } from "../blockchain.js";
 
 const generateAccessAndRefreshToken = async(userId) => {
     try{
@@ -70,6 +71,19 @@ const registerDoctor = asyncHandler(async (req, res) => {
 
         if(!createdDoctor) {
             throw new ApiError(500, "Something went wrong while registering the doctor");
+        }
+        // Register on blockchain
+        try {
+            const txHash = await registerDoctorOnChain(
+                walletAddress,
+                licenseNumber,
+                fullName,
+                Specialization
+            );
+            console.log("✅ Blockchain txHash:", txHash);
+        } catch (blockchainError) {
+            console.error("❌ Blockchain error:", blockchainError);
+            // Optional: Delete doctor if blockchain fails
         }
 
         const doctorPlainObject = createdDoctor.toObject();
