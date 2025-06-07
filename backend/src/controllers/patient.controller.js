@@ -35,7 +35,7 @@ const registerPatient = asyncHandler(async (req, res) => {
     const existedPatient = await Patient.findOne({aadharNumber})
 
     if(existedPatient){
-        throw new ApiError(409, "aadhar Number  is already in use");
+        throw new ApiError(409, "aadhar Number  is already in use"); 
     }
 
 
