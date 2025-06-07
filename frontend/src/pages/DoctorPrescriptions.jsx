@@ -52,7 +52,7 @@ function DoctorPrescriptions() {
       <form onSubmit={handleSubmit} className="space-y-5">
         <div>
           <label className="block mb-1 font-medium">
-            Patient Aadhar or Wallet Address
+            Patient Wallet Address
           </label>
           <input
             type="text"
@@ -154,6 +154,23 @@ function DoctorPrescriptions() {
             onChange={handleChange}
             className="w-full border border-gray-300 rounded px-4 py-2"
             rows="2"
+          />
+        </div>
+        {/* Upload Section */}
+        <div>
+          <label className="block mb-1 font-medium">
+            Upload Prescription Image/PDF
+          </label>
+          <input
+            type="file"
+            accept="image/*,application/pdf"
+            onChange={(e) => {
+              const file = e.target.files[0];
+              if (file) {
+                alert(`Selected file: ${file.name}`);
+              }
+            }}
+            className="w-full border border-gray-300 rounded px-3 py-2 file:bg-blue-100 file:border-0 file:px-4 file:py-2 file:rounded file:text-blue-700 file:font-semibold hover:file:bg-blue-200"
           />
         </div>
 

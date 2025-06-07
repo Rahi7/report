@@ -24,11 +24,15 @@ import PatientPrescription from "./pages/PatientPrescription";
 import PatientAppointments from "./pages/PatientAppointments";
 import PatientProfile from "./pages/PatientProfile";
 
+// Import the new DoctorProfile component
+import DoctorProfile from "./pages/DoctorProfile";
+
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
+
         <Route
           path="login"
           element={
@@ -114,6 +118,15 @@ function App() {
           element={
             <ProtectedRoute>
               <PatientProfile />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="doctor/profile"
+          element={
+            <ProtectedRoute>
+              <DoctorProfile />
             </ProtectedRoute>
           }
         />
