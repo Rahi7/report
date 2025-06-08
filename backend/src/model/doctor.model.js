@@ -45,7 +45,8 @@ const doctorSchema = new Schema(
         walletAddress : {
             type : "string",
             required : [true, "walletAddress is required"],
-            unique : true
+            unique : true,
+            trim : true
         },
         refreshToken : {
             type : "string",
