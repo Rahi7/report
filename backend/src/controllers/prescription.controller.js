@@ -62,6 +62,29 @@ const addPrescription = asyncHandler(async (req, res) => {
   }
 });
 
+// const getPrescriptions = asyncHandler(async (req, res) => {
+//   const walletAddress = req.body.walletAddress;
+//   console.log(req.body);
+
+//   if (!walletAddress) {
+//     throw new ApiError(401, "Unauthorized: Wallet address missing");
+//   }
+
+//   try {
+//     let prescriptions = await fetchFromBlockchain(walletAddress);
+
+//     // Convert BigInt to string for JSON serialization
+//     prescriptions = convertBigIntToString(prescriptions);
+//     console.log(convertBigIntToString(prescriptions))
+//     return res.status(200).json(
+//       new ApiResponse(200, prescriptions, "Fetched prescriptions from blockchain")
+//     );
+//   } catch (error) {
+//     console.error("❌ Error fetching prescriptions:", error);
+//     throw new ApiError(500, "Failed to fetch prescriptions from blockchain");
+//   }
+// });
+
 const getPrescriptions = asyncHandler(async (req, res) => {
   const walletAddress = req.body.walletAddress;
   console.log(req.body);
@@ -71,10 +94,24 @@ const getPrescriptions = asyncHandler(async (req, res) => {
   }
 
   try {
-    let prescriptions = await fetchFromBlockchain(walletAddress);
+    let rawPrescriptions = await fetchFromBlockchain(walletAddress);
 
-    // Convert BigInt to string for JSON serialization
-    prescriptions = convertBigIntToString(prescriptions);
+    // Convert BigInt to string if needed
+    rawPrescriptions = convertBigIntToString(rawPrescriptions);
+
+    // ✅ Transform array of arrays into structured objects
+    const prescriptions = rawPrescriptions.map((p, index) => ({
+      _id: `presc-${p[0] || index}`, // or just use index
+      patientId: p[1] || null,
+      doctorId: p[2] || null,
+      createdAt: new Date(Number(p[3]) * 1000).toISOString(), // convert timestamp to ISO
+      diagnosis: p[4] || "Not provided",
+      treatment: p[5] || "No treatment specified",
+      remarks: p[6] || "No remarks",
+      // aadhaar: walletAddress
+    }));
+
+    console.log("✅ Final structured prescriptions:", prescriptions);
 
     return res.status(200).json(
       new ApiResponse(200, prescriptions, "Fetched prescriptions from blockchain")
@@ -84,5 +121,6 @@ const getPrescriptions = asyncHandler(async (req, res) => {
     throw new ApiError(500, "Failed to fetch prescriptions from blockchain");
   }
 });
+
 
 export { addPrescription, getPrescriptions }
